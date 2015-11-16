@@ -1,0 +1,66 @@
+<!-- Angular has 2 way data binding 
+Changing the val in JS also changes the val in HTML
+-->
+
+<!-- MVC - Model View Controller
+What the user sees
+- View is nything that has to do w the display 
+
+- Model is the code that's running the information (firebase/database); database is an elem of the model
+
+- Controller facilitates the changes; synchronizes the model && view; when user changes one, controller changes the other
+	- fat model, skinny controller bc models are reusable
+ -->
+
+<!DOCTYPE html>
+<html ng-app="app">
+<!-- Directive: something we can put on things(html, tag, elem, comment, class, etc) to change how the HTML is ready by JS 
+
+adding "ng-app" means that html will read in angular
+"ng-app = app" means that everything between html tags is run by the app module (in the app.js file)
+-->
+<head>
+	<title>coder-camps-js</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap_theme.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/site.css">
+</head>
+<body ng-controller="CarController">
+<!-- everything in the ng-controller is controlled in the CarController scope -->
+	<h1>The App Works!</h1>
+	<div class="well form-inline">
+		<input type="text" placeholder="Car Model" ng-model="car.model" class="form-control" />
+		<input type="text" placeholder="Color" ng-model="car.color" class="form-control" />
+		<input type="text" placeholder="Year" ng-model="car.year" class="form-control" />
+		<span ng-show="!isEditing">
+			<button type="button" class="btn btn-primary" ng-click="createCar();">Submit</button>
+		</span>
+		<span ng-show="isEditing">
+			<button type="button" class="btn btn-primary" ng-click="saveEdit();">Save</button>	
+			<button type="button" class="btn btn-danger" ng-click="cancelEdit();">Cancel</button>
+		</span>		
+	</div>	
+	<hr>
+
+	<div class="well container" ng-repeat="c in cars track by $index">
+	<!-- ^^ var c = cars[i] -->
+		<h1>Model: {{c.model}}</h1> 
+		<h2>Color: {{c.color}}</h2>
+		<h2>Year: {{c.year}}</h2>
+		<button type="button" class="btn btn-warning" ng-click="editCar(c);">Edit</button>
+ 		<button type="button" class="btn btn-danger" ng-click="cars.splice($index, 1)">Delete</button>
+	</div>
+
+<!-- 	<input ng-model="test" />
+ -->	<!-- "ng-model" is a directive; take the model from the input and link it w the test var-->
+	<!-- same as ==> $scope.test = this input.value; -->
+<!-- 	<h1>{{test}}</h1><h1>{{hello}}</h1>
+ -->	<!-- ^^ we call these template/mustache tags -->
+<!-- 	<button class="btn btn-default" ng-click="test='This is variable test';">Click</button>
+ -->	<!--"ng-click" using angular module on the click  -->
+
+	<script src="/angular/angular.min.js"></script>
+	<script src="/javascript/app.js"></script>
+</body>
+</html>
